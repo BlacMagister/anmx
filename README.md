@@ -27,6 +27,6 @@ npm install
 node animix.js or node animix-noproxy.js (if you don't use a proxy)
 ```
 # Contact
-- Telegram: <https://t.me/tuineonganh>
-- Group: <https://t.me/dredchat>
+- Telegram: <https://t.me/DustVoid>
+- Group: -
 
