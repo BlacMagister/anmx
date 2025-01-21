@@ -4,8 +4,8 @@ const colors = require('colors');
 const readline = require("readline");
 
 const clan_id = 143;
-const maxThreads = 50000;
-const taskTimeout = 20 * 60 * 1000; // Timeout 20 menit untuk setiap akun
+const maxThreads = 100; // Mengurangi jumlah thread untuk menghindari beban berlebihan
+const taskTimeout = 10 * 60 * 1000; // Timeout 10 menit untuk setiap akun
 
 class Animix {
     constructor() {
@@ -47,7 +47,7 @@ class Animix {
                 } else {
                     console.log(`[Akun ${stt}] Sudah berada di clan ID ${clan_id}.`.green);
                 }
-                await this.sleep(2000);
+                await this.sleep(1000); // Mengurangi waktu tunggu
             }
         } catch (error) {
             console.log(`[Akun ${stt}] Gagal memeriksa clan: ${error.message}`.red);
@@ -69,7 +69,7 @@ class Animix {
             } else {
                 console.log(`[Akun ${stt}] Gagal bergabung dengan clan ${clan_id}.`.yellow);
             }
-            await this.sleep(2000);
+            await this.sleep(1000); // Mengurangi waktu tunggu
         } catch (error) {
             console.log(`[Akun ${stt}] Gagal saat bergabung dengan clan: ${error.message}`.red);
             throw error;
@@ -88,7 +88,7 @@ class Animix {
 
             if (response.status === 200 && response.data.result === true) {
                 console.log(`[Akun ${stt}] Berhasil keluar dari clan ID ${currentClanId}!`.green);
-                await this.sleep(2000);
+                await this.sleep(1000); // Mengurangi waktu tunggu
             } else {
                 console.log(`[Akun ${stt}] Gagal keluar dari clan ID ${currentClanId}.`.yellow);
             }
@@ -251,7 +251,7 @@ class Animix {
                 if (attackResponse.status === 200 && attackResponse.data.result) {
                     const isWin = attackResponse.data.result.is_win;
                     console.log(colors.green(`[Akun ${stt}] Menyerang: ${isWin ? 'Menang' : 'Kalah'}`));
-                    await this.sleep(15000);
+                    await this.sleep(10000); // Mengurangi waktu tunggu
                 } else {
                     console.error(colors.red(`[Akun ${stt}] Gagal melakukan serangan.`));
                 }
@@ -282,7 +282,7 @@ class Animix {
                         });
 
                     gachaPromises.push(gachaRequest);
-                    await this.sleep(2000);
+                    await this.sleep(1000); // Mengurangi waktu tunggu
                 }
                 await Promise.all(gachaPromises);
             } else {
@@ -374,7 +374,7 @@ class Animix {
                     savedPair = savedPair || { mom, dad };
 
                     await performMix(mom, dad);
-                    await this.sleep(2000); 
+                    await this.sleep(1000); // Mengurangi waktu tunggu
                 }
             }
 
@@ -457,7 +457,7 @@ class Animix {
                         );
                     }
 
-                    await this.sleep(2000);
+                    await this.sleep(1000); // Mengurangi waktu tunggu
                 }
             }
         } catch (error) {
@@ -504,7 +504,7 @@ class Animix {
                 );
             }
 
-            await this.sleep(2000);  
+            await this.sleep(1000); // Mengurangi waktu tunggu
         } catch (error) {
             console.error(`[Akun ${stt}] Gagal saat claim bonus: ${error.message}`.red);
             throw error;  
@@ -548,7 +548,7 @@ class Animix {
                         } else {
                             console.log(`[Akun ${stt}] Gagal claim achievement ID ${questId}: ${claimResponse.statusText}`.red);
                         }
-                        await this.sleep(2000);
+                        await this.sleep(1000); // Mengurangi waktu tunggu
                     } catch (error) {
                         console.log(`[Akun ${stt}] Gagal claim achievement ID ${questId}: ${error.message}`.red);
                         throw error;  
@@ -641,7 +641,7 @@ class Animix {
                     console.log(`[Akun ${stt}] Gagal claim mission ${mission_id}`.red);
                     continue;
                 }
-                await this.sleep(2000);
+                await this.sleep(1000); // Mengurangi waktu tunggu
             }
 
             const allMissionsToEnter = [...canCompletedMissions, ...missionsWithoutCanCompleted];
@@ -692,7 +692,7 @@ class Animix {
                 } else {
                     console.log(`[Akun ${stt}] Gagal masuk ke mission ${mission_id}`);
                 }
-                await this.sleep(2000);
+                await this.sleep(1000); // Mengurangi waktu tunggu
             }
         } catch (error) {
             console.log(`[Akun ${stt}] Gagal: ${error.message}`.red);
@@ -712,7 +712,7 @@ class Animix {
                 const questCodes = response.data.result.quests
                     .filter(quest => quest.status === false && quest.quest_code !== 'REFERRAL_0' && quest.quest_code !== 'HI_CLAN' && quest.quest_code !== 'HPY25_CLAN')
                     .map(quest => quest.quest_code);
-                await this.sleep(2000); 
+                await this.sleep(1000); // Mengurangi waktu tunggu
 
                 return questCodes; 
             } else {
@@ -771,7 +771,7 @@ class Animix {
 
             const chunkedTasks = chunkArray(tasks, maxThreads);
             for (const chunk of chunkedTasks) {
-                const taskPromises = chunk.map((task, index) => this.sleep(index * 90000).then(task));
+                const taskPromises = chunk.map((task, index) => this.sleep(index * 5000).then(task)); // Mengurangi waktu tunggu antar task
                 await Promise.all(taskPromises);
             }
 
