@@ -8,6 +8,7 @@ EDIT BY : @DustVoid
 This script automates various tasks for the Animix
 
 # Features
+- Mass Running
 -  Auto Join/Claim Missions  
 -  Auto Gatcha New Pets  
 -  Auto Complete Quests  
