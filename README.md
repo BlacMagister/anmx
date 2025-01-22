@@ -1,5 +1,5 @@
 # Animix Bot
-![image](https://github.com/user-attachments/assets/3d82b1e3-b717-47c3-aa16-0c7c86c69d3e)
+EDIT BY : @DustVoid
 
 
 
