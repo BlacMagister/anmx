@@ -725,6 +725,29 @@ class Animix {
         }
     }
 
+    async checkQuest(questCode, query, stt) {
+        try {
+            const headers = { ...this.headers, 'tg-init-data': `${query}` };
+            const payload = { quest_code: questCode };
+
+            const checkResponse = await axios.post(
+                'https://pro-api.animix.tech/public/quest/check',
+                payload,
+                { headers }
+            );
+
+            if (checkResponse.status === 200 && checkResponse.data.result) {
+                console.log(`[Akun ${stt}] Berhasil check quest ${questCode}`.green);
+            } else {
+                console.log(`[Akun ${stt}] Gagal check quest ${questCode}: ${checkResponse.statusText}`.red);
+            }
+            await this.sleep(1000); // Mengurangi waktu tunggu
+        } catch (error) {
+            console.log(`[Akun ${stt}] Gagal check quest ${questCode}: ${error.message}`.red);
+            throw error;
+        }
+    }
+
     async processQueries(queryFilePath) {
         const startTime = Date.now();
         try {
