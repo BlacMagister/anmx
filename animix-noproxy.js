@@ -4,7 +4,7 @@ const colors = require('colors');
 const readline = require("readline");
 
 const CLAN_ID = 143;
-const MAX_THREADS = 10; // Dikurangi lagi untuk menghindari 429
+const MAX_THREADS = 50; // Dikurangi lagi untuk menghindari 429
 const TASK_TIMEOUT = 15 * 60 * 1000; // 15 menit timeout per akun
 const REQUEST_DELAY = 5000; // Penundaan 5 detik antar permintaan untuk menghindari 429
 
