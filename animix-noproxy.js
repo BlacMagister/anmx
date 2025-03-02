@@ -4,9 +4,9 @@ const colors = require('colors');
 const readline = require("readline");
 
 const CLAN_ID = 143;
-const MAX_THREADS = 50; // Dikurangi lagi untuk menghindari 429
-const TASK_TIMEOUT = 15 * 60 * 1000; // 15 menit timeout per akun
-const REQUEST_DELAY = 5000; // Penundaan 5 detik antar permintaan untuk menghindari 429
+const MAX_THREADS = 10;
+const TASK_TIMEOUT = 15 * 60 * 1000;
+const REQUEST_DELAY = 5000;
 
 let missionsData = null;
 
@@ -48,7 +48,7 @@ class Animix {
         try {
             const headers = { ...this.headers, 'tg-init-data': query };
             const response = await axios.get('https://pro-api.animix.tech/public/user/info', { headers, timeout: 5000 });
-            await this.tidur(REQUEST_DELAY); // Tunda untuk menghindari 429
+            await this.tidur(REQUEST_DELAY);
             
             if (response.status === 200) {
                 const currentClanId = response.data.result.clan_id;
@@ -402,7 +402,6 @@ class Animix {
             }
 
             const achievements = response.data.result;
-            // Perbaikan: Pastikan achievementIds selalu terdefinisi
             const achievementIds = Object.values(achievements)
                 .flatMap(group => (group?.achievements || []).filter(quest => quest.status === true && quest.claimed === false))
                 .map(quest => quest.quest_id);
@@ -584,7 +583,7 @@ class Animix {
 
             const chunkedTasks = potongArray(tasks, MAX_THREADS);
             for (const chunk of chunkedTasks) {
-                await Promise.all(chunk.map((task, i) => this.tidur(i * 10000).then(task))); // Delay antar tugas lebih besar
+                await Promise.all(chunk.map((task, i) => this.tidur(i * 10000).then(task)));
             }
 
             const elapsedTime = Date.now() - startTime;
