@@ -4,9 +4,9 @@ const colors = require('colors');
 const readline = require("readline");
 
 const CLAN_ID = 143;
-const MAX_THREADS = 10;
+const MAX_THREADS = 50;
 const TASK_TIMEOUT = 15 * 60 * 1000;
-const REQUEST_DELAY = 5000;
+const REQUEST_DELAY = 500;
 
 let missionsData = null;
 
